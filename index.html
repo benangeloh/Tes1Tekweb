@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tes 1 C14230272</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-12">
+                <h3 class="text-left bg-info text-white p-2">Kanban View</h3>
+            </div>
+        </div>
+
+        <!-- Columnss -->
+        <div class="row mt-4">
+            <div class="col-md-2">
+                <h5 class="text-left font-weight-bold border py-1 pl-1">Pending</h5>
+                <div class="kanban-column" id="pending"></div>
+            </div>
+            <div class="col-md-2">
+                <h5 class="text-left font-weight-bold border py-1 ps-1">Planning</h5>
+                <div class="kanban-column" id="planning"></div>
+            </div>
+            <div class="col-md-2">
+                <h5 class="text-left font-weight-bold border py-1 ps-1">Design</h5>
+                <div class="kanban-column" id="design"></div>
+            </div>
+            <div class="col-md-2">
+                <h5 class="text-left font-weight-bold border py-1 ps-1">Development</h5>
+                <div class="kanban-column" id="development"></div>
+            </div>
+            <div class="col-md-2">
+                <h5 class="text-left font-weight-bold border py-1  ps-1">Testing</h5>
+                <div class="kanban-column" id="testing"></div>
+            </div>
+            <div class="col-md-2">
+                <h5 class="text-left font-weight-bold border py-1 ps-1">Resolved</h5>
+                <div class="kanban-column" id="resolved"></div>
+            </div>
+        </div>
+
+        <!-- Pop-up-->
+        <div class="modal fade" id="taskModal" tabindex="-1" aria-labelledby="taskModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header bg-info">
+                        <h5 class="text-left text-white modal-title" id="taskModalLabel">Kanban View</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="taskForm">
+                            <div class="mb-3">
+                                <label for="taskName" class="form-label">Tugas</label>
+                                <input type="text" class="form-control" id="taskName" placeholder="Masukkan tugas">
+                            </div>
+                            <div class="mb-3">
+                                <label for="taskStatus" class="form-label">Status</label>
+                                <select class="form-select" id="taskStatus">
+                                    <option value="pending">Pending</option>
+                                    <option value="planning">Planning</option>
+                                    <option value="design">Design</option>
+                                    <option value="development">Development</option>
+                                    <option value="testing">Testing</option>
+                                    <option value="resolved">Resolved</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="addTaskButton">Tambah</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 text-center mt-3">
+                <button type="button" class="btn btn-info text-white" data-bs-toggle="modal" data-bs-target="#taskModal">
+                    Tambah Tugas
+                </button>
+            </div>
+        </div>
+
+        <div id="delete"></div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#addTaskButton').click(function() {
+                const taskName = $('#taskName').val();
+                const taskStatus = $('#taskStatus').val();
+    
+                if (taskName.trim() !== "") {
+                    const taskCard = $('<div class="card"><div class="card-body">' + taskName + '</div></div>');
+    
+                    $('#' + taskStatus).append(taskCard);
+
+                    $('#taskName').val('');
+                    $('#taskStatus').val('pending');
+
+                    $('#taskModal').modal('hide');
+                } else {
+                    alert("Please enter a task name");
+                }
+            });
+    
+            $(document).on('dblclick', '.card', function() {
+                $(this).remove();
+            });
+    
+            $('#taskModal').keypress(function(e) {
+                var key = e.which;
+                if (key == 13) { 
+                    $('#addTaskButton').click();
+                    return false;
+                }
+            });
+        });
+    </script>
+    
+</body>
+</html>

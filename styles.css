@@ -1,0 +1,13 @@
+body {
+    background-color: #F5F5FA;
+}
+.kanban-column {
+    min-height: 50vh;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.card {
+    margin-bottom: 10px;
+}
